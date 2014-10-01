@@ -67,7 +67,7 @@ class MvcApplication {
             $this->db_conn = new PDO(
                 "mysql:host={$this->database['host']};dbname={$this->database['database']}",
                 $this->database['username'],
-                $this->database['passwdord']);
+                $this->database['password']);
         }
         catch(Exception $error) {
             // Report the failure to the user
