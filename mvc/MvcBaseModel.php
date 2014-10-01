@@ -56,15 +56,6 @@ class MvcBaseModel {
                 "Invalid model",
                 ["message" => $error]);
     }
-
-    /**
-     * Fetches all objects in the database for the given model
-     * @return array A result of objects
-     */
-    public function allObjects() {
-        return $this->allObjectsWithQuery("");
-    }
-
     /**
      * Fetches all objects in the database for the given model and query
      * @param $query string SQL query to append to the SELECT query
@@ -82,5 +73,30 @@ class MvcBaseModel {
 
         // Return an array of objects
         return $results;
+    }
+
+    /**
+     * Fetches all objects in the database for the given model
+     * @return array A result of objects
+     */
+    public function allObjects() {
+        return $this->allObjectsWithQuery("");
+    }
+
+    /**
+     * @param $pk int The primary key for the object to fetch
+     * @return mixed The object or false if none were found
+     */
+    public function getObjectByPk($pk) {
+        // Check wether the primary key is actually numeric
+        if(!is_numeric($pk))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Cannot get an object with a non-numeric primary key",
+                ['pk' => $pk]);
+
+        // Fetch the object
+        $results = $this->allObjectsWithQuery("WHERE " . $this->tablePrimaryKeyField . " = " . $pk);
+        if(count($results) == 0 ) return false;
+        else return $results[0];
     }
 }
