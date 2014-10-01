@@ -96,6 +96,52 @@ class MvcApplication {
      * @param array $details Detailed information to be displayed
      */
     private function dieWithDebugMessageOr404($title, $details=array()) {
-        var_dump($details);
+        // Set the HTTP response code
+        http_response_code(404);
+
+        // HTML head
+        echo "<!doctype html>";
+        echo "<html>";
+        echo "<head>";
+        echo "<style type='text/css'>body { font-family: Arial; }</style>";
+        echo "<title>{$this->appName} {$this->appVersion}</title></head>";
+        echo "<body>";
+
+        // Check wether to display detailed debug information or not
+        if(!$this->debug) {
+            echo "<h1>Not Found</h1>";
+            echo "The requested URL was not found on this server.";
+        }
+        else {
+            echo "<h1>$title</h1>";
+            echo "A detailed description will follow. Turn off <code>debug</code> in production!";
+
+            // You may want to add additional variables to be printed to the screen
+            $toPrint = ['Debug information' => $details,
+                        'GET global' => $_GET,
+                        'POST global' => $_POST,
+                        'SERVER global' => $_SERVER];
+
+            foreach($toPrint as $description => $data) {
+                // Skip empty arrays
+                if(is_array($data) && count($data) == 0) continue;
+
+                // Print information to the screen
+                echo "<hr />";
+                echo "<strong>$description</strong>";
+                echo "<pre>";
+                print_r($data);
+                echo "</pre>";
+            }
+        }
+
+        // Footer
+        echo "<hr>";
+        echo "<span style='font-style: italic;'>{$this->appName} {$this->appVersion}</span>";
+        echo "</body>";
+        echo "</html>";
+
+        // Terminate the application
+        exit;
     }
 }
