@@ -21,6 +21,11 @@ class MvcBaseModel {
     protected $tableName = "";
 
     /**
+     * @var string Database table primary key field name for this model
+     */
+    protected $tablePrimaryKeyField = "";
+
+    /**
      * @var MvcApplication A pointer to the main MvcApplication instance
      */
     protected $MvcInstance;
@@ -37,12 +42,36 @@ class MvcBaseModel {
         $this->verifyModel();
     }
 
+    /**
+     * Verifies the model
+     */
     private function verifyModel() {
+        // Check basic variables
         if(empty($this->tableName)) $error = "No table name was set";
+        else if(empty($this->tablePrimaryKeyField)) $error = "No primary key field was set";
 
+        // Stop on errors
         if(isset($error))
             $this->MvcInstance->dieWithDebugMessageOr404(
                 "Invalid model",
                 ["message" => $error]);
+    }
+
+    /**
+     * Fetches all objects in the database for the given model
+     * @return array A result of objects
+     */
+    public function allObjects() {
+        // Fetch all objects
+        $query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName}");
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // Add in the primary key value as an additional field
+        for($obj_index = 0; $obj_index < count($results); $obj_index++)
+            if(!in_array('pk', $results[$obj_index]))
+                $results[$obj_index]['pk'] = $results[$obj_index][$this->tablePrimaryKeyField];
+
+        // Return an array of objects
+        return $results;
     }
 }
