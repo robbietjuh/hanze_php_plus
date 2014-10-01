@@ -15,5 +15,31 @@
  */
 
 class JobsModel extends MvcBaseModel {
+    /**
+     * @var string Database table name for this model
+     */
+    protected $tableName = "jobs";
 
+    /**
+     * @var string Database table primary key field name for this model
+     */
+    protected $tablePrimaryKeyField = "JobID";
+
+    /**
+     * @var array Columns that need to be written to the screen. Used by the view.
+     */
+    public $tableColumns = [
+        "Titel" => "JobTitle",
+        "Minimumloon" => "MinSalary",
+        "Maximumloon" => "MaxSalary"];
+
+    /**
+     * @var string Friendly name (plural) of the model. Used by the view.
+     */
+    public $friendlyNamePlural = "Banen";
+
+    /**
+     * @var string Friendly name (single) of the model. Used by the view.
+     */
+    public $friendlyNameSingle = "Baan";
 }
