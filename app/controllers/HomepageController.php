@@ -17,10 +17,8 @@
 class HomepageController extends MvcBaseController {
 
     public function renderHomepage($args) {
-        echo "<h1>It works</h1>";
-        echo "Yay, this the HompeageController. Woop woop!<br /><pre>";
-
-        var_dump($this);
+        $this->renderView("base/header");
+        $this->renderView("base/footer");
     }
 
 }
