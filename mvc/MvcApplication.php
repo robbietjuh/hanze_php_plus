@@ -16,6 +16,7 @@
  */
 
 require_once "mvc/MvcBaseController.php";
+require_once "mvc/MvcBaseModel.php";
 
 class MvcApplication {
     /**
