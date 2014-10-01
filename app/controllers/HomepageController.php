@@ -17,7 +17,7 @@
 class HomepageController extends MvcBaseController {
     /**
      * Renders the hompage
-     * @param $args Arguments passed on from the urldef
+     * @param $args array Arguments passed on from the urldef
      */
     public function renderHomepage($args) {
         $this->data['title'] = 'Home';

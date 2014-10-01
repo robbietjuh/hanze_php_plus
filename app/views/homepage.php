@@ -5,7 +5,7 @@
  * homepage.php
  * Hanzecontact
  *
- * DESCRIPTION
+ * Homepage view
  *
  * @author     R. de Vries <r.devries@robbytu.net>
  * @version    1.0.0

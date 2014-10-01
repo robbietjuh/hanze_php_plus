@@ -21,8 +21,8 @@
 class ObjectController extends MvcBaseController {
     /**
      * Load the model corresponding to the urldef data
-     * @param $modelArg Model from the urldef
-     * @return mixed Specified model object
+     * @param $modelArg array Model from the urldef
+     * @return MvcBaseModel Specified model object
      */
     private function loadCorrespondingModel($modelArg) {
         return $this->loadModel(ucfirst($modelArg) . 'Model');
@@ -30,7 +30,7 @@ class ObjectController extends MvcBaseController {
 
     /**
      * Renders the base template views with a main view
-     * @param $view Name of the main view to render
+     * @param $view string Name of the main view to render
      */
     private function renderBaseTemplateWithView($view) {
         $this->renderView("base/header");
@@ -64,7 +64,7 @@ class ObjectController extends MvcBaseController {
 
     /**
      * Lists the objects in the database
-     * @param $args Arguments passed on from the urldef
+     * @param $args array Arguments passed on from the urldef
      */
     public function listObjects($args) {
         // Load the model corresponding to the arguments passed on from the urldef
@@ -99,7 +99,7 @@ class ObjectController extends MvcBaseController {
 
     /**
      * Add an object to the database or show a form to create a new object
-     * @param $args Arguments passed on from the urldef
+     * @param $args array Arguments passed on from the urldef
      */
     public function newObject($args) {
         // Load the model corresponding to the arguments passed on from the urldef
@@ -123,7 +123,7 @@ class ObjectController extends MvcBaseController {
 
     /**
      * Show a form to edit an object that's in the database
-     * @param $args Arguments passed on from the urldef
+     * @param $args array Arguments passed on from the urldef
      */
     public function editObject($args) {
         // Load the model corresponding to the arguments passed on from the urldef
@@ -153,7 +153,7 @@ class ObjectController extends MvcBaseController {
 
     /**
      * Remove an object
-     * @param $args Arguments passed on from the urldef
+     * @param $args array Arguments passed on from the urldef
      */
     public function removeObject($args) {
         // Load the model corresponding to the arguments passed on from the urldef
