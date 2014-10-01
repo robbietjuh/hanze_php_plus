@@ -105,10 +105,17 @@ class ObjectController extends MvcBaseController {
         // Load the model corresponding to the arguments passed on from the urldef
         $model = $this->loadCorrespondingModel($args['model']);
 
+        // Check whether data has been submitted. If so, process to the model
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+            if($model->createObject($_POST))
+                $this->redirectToUrl("/{$args['model']}/list");
+        else
+            $this->data['error'] = 'Niet alle gegevens konden opgeslagen worden. Controleer de invoer.';
+
         // Set up all data variables
         $this->data['title'] = $model->friendlyNameSingle . " toevoegen";
         $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/new";
-        $this->data['form'] = $this->getFormArray($args['model'], $model, false);
+        $this->data['form'] = $this->getFormArray($args['model'], $model, ($_SERVER["REQUEST_METHOD"] == "POST") ? $_POST : false);
 
         // Render the views
         $this->renderBaseTemplateWithView("object_form");
@@ -128,10 +135,17 @@ class ObjectController extends MvcBaseController {
                 "Object niet gevonden",
                 ['pk' => $args['pk']]);
 
+        // Check whether data has been submitted. If so, process to the model
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+            if($model->updateObject($args['pk'], $_POST))
+                $this->redirectToUrl("/{$args['model']}/list");
+            else
+                $this->data['error'] = 'Niet alle gegevens konden opgeslagen worden. Controleer de invoer.';
+
         // Set up all data variables
         $this->data['title'] = $model->friendlyNameSingle . " bewerken";
         $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/{$args['pk']}/edit";
-        $this->data['form'] = $this->getFormArray($args['model'], $model, $object);
+        $this->data['form'] = $this->getFormArray($args['model'], $model, ($_SERVER["REQUEST_METHOD"] == "POST") ? $_POST : $object);
 
         // Render the views
         $this->renderBaseTemplateWithView("object_form");
