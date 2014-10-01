@@ -30,7 +30,7 @@ class app extends MvcApplication {
     /**
      * @var string Base URL of the application, could come in handy when used in combination with Apache's mod_user
      */
-    public $appBaseUrl = "/";
+    public $appBaseUrl = "/~robert/Hanze/php_plus_opdracht";
 
     /**
      * @var bool Wether or not the enable detailed debug information
