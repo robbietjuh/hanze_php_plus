@@ -59,6 +59,11 @@ class MvcApplication {
     protected $urls;
 
     /**
+     * @var mixed Currently used controller object
+     */
+    protected $controller;
+
+    /**
      * Bootstrap the MVC framework.
      */
     public function __construct() {
@@ -84,8 +89,40 @@ class MvcApplication {
      * Parse the URL and compare it the urldefs in the application's config. Dispatch
      * to the controller if a match is found.
      */
-    private function dispatch() {
-        var_dump($this);
+    public function dispatch() {
+        // Loop through the configured urls and check whether they match
+        // with any of the configured urls in the application config.
+        foreach($this->urls as $pattern => $callback) {
+            if (preg_match($pattern, $_GET['path'], $matches) !== false) {
+                if(count($matches) > 0) {
+                    $controller = $callback[0];
+                    $function = $callback[1];
+                    $args_by_url = $matches;
+                }
+            }
+        }
+
+        // Check whether a match was found
+        if(!isset($controller) || !isset($function) || !isset($args_by_url))
+            $this->dieWithDebugMessageOr404(
+                "No urldef match found for requested url",
+                ["url" => $_GET['path'], "urldefs" => $this->urls]);
+
+        // Check wether the controller exists
+        if(!file_exists("app/controllers/$controller.php")) {
+            $this->dieWithDebugMessageOr404(
+                "Could not dispatch to controller: file not found",
+                ['url' => $_GET['path'], 'controller' => $controller]);
+        }
+
+        // Include the controller file
+        require_once("app/controllers/$controller.php");
+
+        // Initialize the controller class
+        $this->controller = new $controller($this);
+
+        // Call the method specified in the URL definition
+        $this->controller->$function($args_by_url);
     }
 
     /**
