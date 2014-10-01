@@ -88,6 +88,7 @@ class MvcBaseModel {
     }
 
     /**
+     * Fetch the object with the specified primary key from the database
      * @param $pk int The primary key for the object to fetch
      * @return mixed The object or false if none were found
      */
@@ -102,5 +103,23 @@ class MvcBaseModel {
         $results = $this->allObjectsWithQuery("WHERE " . $this->tablePrimaryKeyField . " = " . $pk);
         if(count($results) == 0 ) return false;
         else return $results[0];
+    }
+
+    /**
+     * Deletes an object from the database
+     * @param $pk int Primary key value of the object to delete
+     */
+    public function deleteWithPk($pk) {
+        // Check wether the primary key is actually numeric
+        if(!is_numeric($pk))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Cannot get an object with a non-numeric primary key",
+                ['pk' => $pk]);
+
+        // Delete the object
+        if(!$query = $this->MvcInstance->db_conn->query("DELETE FROM {$this->tableName} WHERE {$this->tablePrimaryKeyField} = $pk"))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Error while executing query",
+                ['error' => $query->errorInfo()]);
     }
 }
