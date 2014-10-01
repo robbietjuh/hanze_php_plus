@@ -63,7 +63,11 @@ class MvcBaseModel {
      */
     public function allObjectsWithQuery($query) {
         // Fetch all objects
-        $query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName} $query");
+        if(!$query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName} $query"))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Error while executing query",
+                ['error' => $query->errorInfo()]);
+
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
         // Add in the primary key value as an additional field
