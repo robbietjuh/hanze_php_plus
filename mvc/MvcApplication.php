@@ -111,11 +111,10 @@ class MvcApplication {
                 ["url" => $_GET['path'], "urldefs" => $this->urls]);
 
         // Check wether the controller exists
-        if(!file_exists("app/controllers/$controller.php")) {
+        if(!file_exists("app/controllers/$controller.php"))
             $this->dieWithDebugMessageOr404(
                 "Could not dispatch to controller: file not found",
                 ['url' => $_GET['path'], 'controller' => $controller]);
-        }
 
         // Include the controller file
         require_once("app/controllers/$controller.php");
