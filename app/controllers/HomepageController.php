@@ -15,7 +15,6 @@
  */
 
 class HomepageController extends MvcBaseController {
-
     /**
      * Renders the hompage
      * @param $args Arguments passed on from the urldef
@@ -27,5 +26,4 @@ class HomepageController extends MvcBaseController {
         $this->renderView("homepage");
         $this->renderView("base/footer");
     }
-
 }
