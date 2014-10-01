@@ -16,6 +16,8 @@
 ?>
         <h1><?=$this->data['title'];?></h1>
 
+        <?=(isset($this->data['error'])) ? "<strong>{$this->data['error']}</strong>" : "";?>
+
         <form method="post" action="<?=$this->data['submitUrl'];?>" enctype="multipart/form-data">
             <table>
                 <?php foreach($this->data['form'] as $friendly => $formInput) { ?>
