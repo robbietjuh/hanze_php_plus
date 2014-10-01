@@ -113,7 +113,6 @@ class EmployeesModel extends MvcBaseModel {
             "    Salary = ?, CommissionPCT = ?, ManagerID = ?, DepartmentID = ? " .
             "WHERE {$this->tablePrimaryKeyField} = ?");
 
-
         return $query->execute([
             $picturePath,
             $data['FirstName'],
