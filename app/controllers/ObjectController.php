@@ -151,8 +151,22 @@ class ObjectController extends MvcBaseController {
         $this->renderBaseTemplateWithView("object_form");
     }
 
+    /**
+     * Remove an object
+     * @param $args Arguments passed on from the urldef
+     */
     public function removeObject($args) {
-        echo "Remove object<br />";
-        var_dump($args);
+        // Load the model corresponding to the arguments passed on from the urldef
+        $model = $this->loadCorrespondingModel($args['model']);
+
+        // Check if the model exists
+        if(!$object = $model->getObjectByPk($args['pk']))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Object niet gevonden",
+                ['pk' => $args['pk']]);
+
+        // Delete the object and redirect back to the object listing
+        $model->deleteWithPk($args['pk']);
+        $this->redirectToUrl("/{$args['model']}/list");
     }
 }
