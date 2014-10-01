@@ -1,0 +1,61 @@
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * style.css
+ * Hanzecontact
+ *
+ * Base template -- css stylesheet
+ *
+ * @author     R. de Vries <r.devries@robbytu.net>
+ * @version    1.0.0
+ * @date       01/10/14
+ * @copyright  2014 RobbytuProjects
+ * @license    MIT License
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: verdana, sans-serif;
+}
+
+body {
+    margin: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+}
+
+td, div, th {
+    font-size: 11px;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+#navigation {
+    border-bottom: 1px solid gray;
+    height: 30px;
+    padding: 10px;
+}
+
+.button {
+    float: left;
+    margin-right: 20px;
+}
+
+#wrapper {
+    width: 980px;
+    border: 1px solid gray;
+    padding: 20px;
+}
+
+.logo {
+    height: 40px;
+}
