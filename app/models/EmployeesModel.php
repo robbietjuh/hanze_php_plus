@@ -95,4 +95,37 @@ class EmployeesModel extends MvcBaseModel {
             $data['ManagerID'],
             $data['DepartmentID']]);
     }
+
+    /**
+     * Update an existing Employee
+     * @param $pk int Primary key value of the object to be updated
+     * @param $data array Data to be used to update the object
+     * @return bool Whether or not the query was successful
+     */
+    public function updateObject($pk, $data) {
+        // Try to save the picture uploaded
+        if(!$picturePath = $this->handlePictureUpload())
+            return false;
+
+        $query = $this->MvcInstance->db_conn->prepare(
+            "UPDATE {$this->tableName} " .
+            "SET Picture = ?, FirstName = ?, LastName = ?, Email = ?, PhoneNumber = ?, HireDate = ?, JobID = ?, " .
+            "    Salary = ?, CommissionPCT = ?, ManagerID = ?, DepartmentID = ? " .
+            "WHERE {$this->tablePrimaryKeyField} = ?");
+
+
+        return $query->execute([
+            $picturePath,
+            $data['FirstName'],
+            $data['LastName'],
+            $data['Email'],
+            $data['PhoneNumber'],
+            $data['HireDate'],
+            $data['JobID'],
+            $data['Salary'],
+            $data['CommissionPCT'],
+            $data['ManagerID'],
+            $data['DepartmentID'],
+            $pk]);
+    }
 }
