@@ -15,6 +15,8 @@
  * @license    MIT License
  */
 
+require_once "mvc/MvcBaseController.php";
+
 class MvcApplication {
     /**
      * @var string Name of the application
