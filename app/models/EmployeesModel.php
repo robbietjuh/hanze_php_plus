@@ -15,5 +15,39 @@
  */
 
 class EmployeesModel extends MvcBaseModel {
+    /**
+     * @var string Database table name for this model
+     */
+    protected $tableName = "employees";
 
+    /**
+     * @var string Database table primary key field name for this model
+     */
+    protected $tablePrimaryKeyField = "EmployeeID";
+
+    /**
+     * @var array Columns that need to be written to the screen. Used by the view.
+     */
+    public $tableColumns = [
+        "Pasfoto" => "Picture",
+        "Voornaam" => "FirstName",
+        "Achternaam" => "LastName",
+        "Email" => "Email",
+        "Telefoonnummer" => "PhoneNumber",
+        "Aangenomen op" => "HireDate",
+        "Baan ID" => "JobID",
+        "Salaris" => "Salary",
+        "CommissionPCT" => "CommissionPCT",
+        "Manager ID" => "ManagerID",
+        "Department ID" => "DepartmentID"];
+
+    /**
+     * @var string Friendly name (plural) of the model. Used by the view.
+     */
+    public $friendlyNamePlural = "Medewerkers";
+
+    /**
+     * @var string Friendly name (single) of the model. Used by the view.
+     */
+    public $friendlyNameSingle = "Medewerker";
 }
