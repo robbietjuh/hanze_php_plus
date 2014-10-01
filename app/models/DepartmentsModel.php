@@ -28,11 +28,10 @@ class DepartmentsModel extends MvcBaseModel {
     /**
      * @var array Columns that need to be written to the screen. Used by the view.
      */
-    public $tableColumns = array(
+    public $tableColumns = [
         'Naam' => 'DepartmentName',
         'Manager ID' => 'ManagerID',
-        'Locatie ID' => 'LocationID'
-    );
+        'Locatie ID' => 'LocationID'];
 
     /**
      * @var string Friendly name (plural) of the model. Used by the view.
