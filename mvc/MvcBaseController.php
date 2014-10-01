@@ -27,12 +27,16 @@ class MvcBaseController {
 
     /**
      * Populates the controller's base variables
-     * @param $sender The MvcApplication that dispatched to the controller
+     * @param $sender MvcApplication The MvcApplication that dispatched to the controller
      */
     public function __construct($sender) {
         $this->MvcInstance = $sender;
     }
 
+    /**
+     * Renders a view
+     * @param $view string Name of the view to render
+     */
     public function renderView($view) {
         // Check wether the view exists
         if(!file_exists("app/views/$view.php"))
@@ -44,6 +48,11 @@ class MvcBaseController {
         include "app/views/$view.php";
     }
 
+    /**
+     * Loads a model
+     * @param $model string Name of the model to load
+     * @return MvcBaseModel The model
+     */
     public function loadModel($model) {
         // Check wether the model exists
         if(!file_exists("app/models/$model.php"))
@@ -57,6 +66,10 @@ class MvcBaseController {
         return $model;
     }
 
+    /**
+     * Redirects the user to another URL and exits the application
+     * @param $url string URL to redirect to
+     */
     public function redirectToUrl($url) {
         header("Location: {$this->MvcInstance->appBaseUrl}$url");
         exit;
