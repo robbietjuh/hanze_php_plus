@@ -66,4 +66,33 @@ class EmployeesModel extends MvcBaseModel {
         move_uploaded_file($_FILES["Picture"]["tmp_name"], "pictures/$name");
         return $name;
     }
+
+    /**
+     * Create a new Employee
+     * @param $data array Data to be used to create the object
+     * @return bool Whether or not the query was successful
+     */
+    public function createObject($data) {
+        // Try to save the picture uploaded
+        if(!$picturePath = $this->handlePictureUpload())
+            return false;
+
+        $query = $this->MvcInstance->db_conn->prepare(
+            "INSERT INTO {$this->tableName} " .
+            "(Picture, FirstName, LastName, Email, PhoneNumber, HireDate, JobID, Salary, CommissionPCT, ManagerID, DepartmentID) VALUES " .
+            "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        return $query->execute([
+            $picturePath,
+            $data['FirstName'],
+            $data['LastName'],
+            $data['Email'],
+            $data['PhoneNumber'],
+            $data['HireDate'],
+            $data['JobID'],
+            $data['Salary'],
+            $data['CommissionPCT'],
+            $data['ManagerID'],
+            $data['DepartmentID']]);
+    }
 }
