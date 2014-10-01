@@ -133,7 +133,7 @@ class MvcApplication {
      * @param string $title The title to be shown in the error message
      * @param array $details Detailed information to be displayed
      */
-    private function dieWithDebugMessageOr404($title, $details=array()) {
+    public function dieWithDebugMessageOr404($title, $details=array()) {
         // Set the HTTP response code
         http_response_code(404);
 
