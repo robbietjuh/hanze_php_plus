@@ -44,4 +44,23 @@ class LocationsModel extends MvcBaseModel {
      * @var string Friendly name (single) of the model. Used by the view.
      */
     public $friendlyNameSingle = "Locatie";
+
+    /**
+     * Create a new Location
+     * @param $data array Data to be used to create the object
+     * @return bool Whether or not the query was successful
+     */
+    public function createObject($data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "INSERT INTO {$this->tableName} " .
+            "(StreetAddress, PostalCode, City, StateProvince, CountryID) VALUES " .
+            "(?, ?, ?, ?, ?)");
+
+        return $query->execute([
+            $data['StreetAddress'],
+            $data['PostalCode'],
+            $data['City'],
+            $data['StateProvince'],
+            $data['CountryID']]);
+    }
 }
