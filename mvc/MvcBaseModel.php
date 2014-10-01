@@ -65,6 +65,11 @@ class MvcBaseModel {
         return $this->allObjectsWithQuery("");
     }
 
+    /**
+     * Fetches all objects in the database for the given model and query
+     * @param $query string SQL query to append to the SELECT query
+     * @return array An array of objects
+     */
     public function allObjectsWithQuery($query) {
         // Fetch all objects
         $query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName} $query");
