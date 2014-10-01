@@ -14,4 +14,5 @@
  * @license    MIT License
  */
 
-var_dump($_GET);
+require_once "app/app.php";
+new app;
