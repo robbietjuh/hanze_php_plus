@@ -59,4 +59,23 @@ class JobsModel extends MvcBaseModel {
             $data['MinSalary'],
             $data['MaxSalary']]);
     }
+
+    /**
+     * Update an existing Job
+     * @param $pk int Primary key value of the object to be updated
+     * @param $data array Data to be used to update the object
+     * @return bool Whether or not the query was successful
+     */
+    public function updateObject($pk, $data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "UPDATE {$this->tableName} " .
+            "SET JobTitle = ?, MinSalary = ?, MaxSalary = ? " .
+            "WHERE {$this->tablePrimaryKeyField} = ?");
+
+        return $query->execute([
+            $data['JobTitle'],
+            $data['MinSalary'],
+            $data['MaxSalary'],
+            $pk]);
+    }
 }
