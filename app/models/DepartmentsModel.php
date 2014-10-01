@@ -42,4 +42,21 @@ class DepartmentsModel extends MvcBaseModel {
      * @var string Friendly name (single) of the model. Used by the view.
      */
     public $friendlyNameSingle = "Afdeling";
+
+    /**
+     * Create a new Department
+     * @param $data array Data to be used to create the object
+     * @return bool Whether or not the query was successful
+     */
+    public function createObject($data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "INSERT INTO {$this->tableName} " .
+            "(DepartmentName, ManagerID, LocationID) VALUES " .
+            "(?, ?, ?)");
+
+        return $query->execute([
+            $data['DepartmentName'],
+            $data['ManagerID'],
+            $data['LocationID']]);
+    }
 }
