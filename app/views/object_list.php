@@ -21,7 +21,7 @@
 
         <table>
             <tr>
-                <?php foreach($this->data['tableColumns'] as $friendly => $column) { echo "<th>$friendly</th>"; } ?>
+                <?php foreach($this->data['tableColumns'] as $friendly => $column) { echo "<th><a href='?sortBy=$column'>$friendly</a></th>"; } ?>
                 <th>Actie</th>
             </tr>
 
