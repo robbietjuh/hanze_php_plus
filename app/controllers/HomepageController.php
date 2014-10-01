@@ -16,8 +16,13 @@
 
 class HomepageController extends MvcBaseController {
 
+    /**
+     * Renders the hompage
+     * @param $args Arguments passed on from the urldef
+     */
     public function renderHomepage($args) {
         $this->renderView("base/header");
+        $this->renderView("homepage");
         $this->renderView("base/footer");
     }
 
