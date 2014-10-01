@@ -63,4 +63,25 @@ class LocationsModel extends MvcBaseModel {
             $data['StateProvince'],
             $data['CountryID']]);
     }
+
+    /**
+     * Update an existing Location
+     * @param $pk int Primary key value of the object to be updated
+     * @param $data array Data to be used to update the object
+     * @return bool Whether or not the query was successful
+     */
+    public function updateObject($pk, $data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "UPDATE {$this->tableName} " .
+            "SET StreetAddress = ?, PostalCode = ?, City = ?, StateProvince = ?, CountryID = ? " .
+            "WHERE {$this->tablePrimaryKeyField} = ?");
+
+        return $query->execute([
+            $data['StreetAddress'],
+            $data['PostalCode'],
+            $data['City'],
+            $data['StateProvince'],
+            $data['CountryID'],
+            $pk]);
+    }
 }
