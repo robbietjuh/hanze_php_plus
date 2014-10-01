@@ -20,10 +20,11 @@
 
 class ObjectController extends MvcBaseController {
     /**
+     * Load the model corresponding to the urldef data
      * @param $modelArg Model from the urldef
      * @return mixed Specified model object
      */
-    function loadCorrespondingModel($modelArg) {
+    private function loadCorrespondingModel($modelArg) {
         return $this->loadModel(ucfirst($modelArg) . 'Model');
     }
 
@@ -31,10 +32,34 @@ class ObjectController extends MvcBaseController {
      * Renders the base template views with a main view
      * @param $view Name of the main view to render
      */
-    function renderBaseTemplateWithView($view) {
+    private function renderBaseTemplateWithView($view) {
         $this->renderView("base/header");
         $this->renderView($view);
         $this->renderView("base/footer");
+    }
+
+    /**
+     * Generates an array of fields and input tags that can be used
+     * by a view to render a form.
+     * @param $modelName string Name of the model to create a form for
+     * @param $model MvcBaseModel A model (should contain a tableColumns variable!)
+     * @param $object mixed Array to be used to fill the inputs or false
+     * @return array Form inputs as an array
+     */
+    private function getFormArray($modelName, $model, $object) {
+        // Stores the form
+        $form = array();
+
+        // Add input fields for every column that the table has
+        foreach($model->tableColumns as $friendly => $column)
+            $form[$friendly] = sprintf(
+                "<input type='%s' name='%s' value='%s' />",
+                (($column == "Picture" && $modelName == "employees") ? "file" : "text"),
+                $column,
+                (is_array($object) && array_key_exists($column, $object)) ? $object[$column] : "");
+
+        // Return the form array
+        return $form;
     }
 
     /**
@@ -42,8 +67,7 @@ class ObjectController extends MvcBaseController {
      * @param $args Arguments passed on from the urldef
      */
     public function listObjects($args) {
-        // Load the model corresponding to the arguments passed on
-        // from the urldef
+        // Load the model corresponding to the arguments passed on from the urldef
         $model = $this->loadCorrespondingModel($args['model']);
 
         // Set up all data variables
@@ -73,9 +97,21 @@ class ObjectController extends MvcBaseController {
         $this->renderBaseTemplateWithView("object_list");
     }
 
+    /**
+     * Add an object to the database or show a form to create a new object
+     * @param $args Arguments passed on from the urldef
+     */
     public function newObject($args) {
-        echo "New object<br />";
-        var_dump($args);
+        // Load the model corresponding to the arguments passed on from the urldef
+        $model = $this->loadCorrespondingModel($args['model']);
+
+        // Set up all data variables
+        $this->data['title'] = $model->friendlyNameSingle . " toevoegen";
+        $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/new";
+        $this->data['form'] = $this->getFormArray($args['model'], $model, false);
+
+        // Render the views
+        $this->renderBaseTemplateWithView("object_form");
     }
 
     public function editObject($args) {
