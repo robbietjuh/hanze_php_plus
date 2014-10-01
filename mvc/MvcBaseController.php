@@ -32,4 +32,15 @@ class MvcBaseController {
     public function __construct($sender) {
         $this->MvcInstance = $sender;
     }
+
+    public function renderView($view) {
+        // Check wether the view exists
+        if(!file_exists("app/views/$view.php"))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Could not render view: file not found",
+                ['view' => $view, 'data' => $this->data]);
+
+        // Include the view
+        include "app/views/$view.php";
+    }
 }
