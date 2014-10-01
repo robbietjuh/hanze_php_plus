@@ -114,9 +114,27 @@ class ObjectController extends MvcBaseController {
         $this->renderBaseTemplateWithView("object_form");
     }
 
+    /**
+     * Show a form to edit an object that's in the database
+     * @param $args Arguments passed on from the urldef
+     */
     public function editObject($args) {
-        echo "Edit object<br />";
-        var_dump($args);
+        // Load the model corresponding to the arguments passed on from the urldef
+        $model = $this->loadCorrespondingModel($args['model']);
+
+        // Check if the model exists
+        if(!$object = $model->getObjectByPk($args['pk']))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Object niet gevonden",
+                ['pk' => $args['pk']]);
+
+        // Set up all data variables
+        $this->data['title'] = $model->friendlyNameSingle . " bewerken";
+        $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/edit";
+        $this->data['form'] = $this->getFormArray($args['model'], $model, $object);
+
+        // Render the views
+        $this->renderBaseTemplateWithView("object_form");
     }
 
     public function removeObject($args) {
