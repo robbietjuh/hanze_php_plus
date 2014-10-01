@@ -43,4 +43,17 @@ class MvcBaseController {
         // Include the view
         include "app/views/$view.php";
     }
+
+    public function loadModel($model) {
+        // Check wether the model exists
+        if(!file_exists("app/views/model.php"))
+            $this->MvcInstance->dieWithDebugMessageOr404(
+                "Could not load the model specified: file not found",
+                ['model' => $model]);
+
+        require_once "app/models/$model.php";
+
+        $model = new $model($this->MvcInstance);
+        return $model;
+    }
 }
