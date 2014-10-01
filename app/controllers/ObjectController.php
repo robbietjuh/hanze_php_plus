@@ -51,7 +51,11 @@ class ObjectController extends MvcBaseController {
 
         $this->data['singleObjectName'] = $model->friendlyNameSingle;
         $this->data['tableColumns'] = $model->tableColumns;
-        $this->data['tableObjects'] = $model->allObjects();
+
+        if(in_array($_GET['sortBy'], array_values($model->tableColumns)))
+            $this->data['tableObjects'] = $model->allObjectsWithQuery(" ORDER BY " . $_GET['sortBy']);
+        else
+            $this->data['tableObjects'] = $model->allObjects();
 
         // Add urldefs
         $this->data['addUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/new";

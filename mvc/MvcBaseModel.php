@@ -62,8 +62,12 @@ class MvcBaseModel {
      * @return array A result of objects
      */
     public function allObjects() {
+        return $this->allObjectsWithQuery("");
+    }
+
+    public function allObjectsWithQuery($query) {
         // Fetch all objects
-        $query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName}");
+        $query = $this->MvcInstance->db_conn->query("SELECT * FROM {$this->tableName} $query");
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
         // Add in the primary key value as an additional field
