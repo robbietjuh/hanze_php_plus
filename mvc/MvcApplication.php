@@ -57,4 +57,45 @@ class MvcApplication {
      * you want to dispatch to. The functionname is called on the controller.
      */
     protected $urls;
+
+    /**
+     * Bootstrap the MVC framework.
+     */
+    public function __construct() {
+        try {
+            // Set up a database connection
+            $this->db_conn = new PDO(
+                "mysql:host={$this->database['host']};dbname={$this->database['database']}",
+                $this->database['username'],
+                $this->database['passwdord']);
+        }
+        catch(Exception $error) {
+            // Report the failure to the user
+            $this->dieWithDebugMessageOr404(
+                'Could not connect to the database server',
+                ['exception' => $error]);
+        }
+
+        // Dispatch the url to the appropriate controller
+        $this->dispatch();
+    }
+
+    /**
+     * Parse the URL and compare it the urldefs in the application's config. Dispatch
+     * to the controller if a match is found.
+     */
+    private function dispatch() {
+        var_dump($this);
+    }
+
+    /**
+     * Print an error message to the screen if @see $debug is enabled,
+     * otherwise print a '404 not found' message and exit.
+     *
+     * @param $title The title to be shown in the error message
+     * @param array $details Detailed information to be displayed
+     */
+    private function dieWithDebugMessageOr404($title, $details=array()) {
+        var_dump($details);
+    }
 }
