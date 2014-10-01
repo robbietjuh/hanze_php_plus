@@ -130,7 +130,7 @@ class ObjectController extends MvcBaseController {
 
         // Set up all data variables
         $this->data['title'] = $model->friendlyNameSingle . " bewerken";
-        $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/edit";
+        $this->data['submitUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/{$args['pk']}/edit";
         $this->data['form'] = $this->getFormArray($args['model'], $model, $object);
 
         // Render the views
