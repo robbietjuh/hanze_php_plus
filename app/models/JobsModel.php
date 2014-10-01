@@ -42,4 +42,21 @@ class JobsModel extends MvcBaseModel {
      * @var string Friendly name (single) of the model. Used by the view.
      */
     public $friendlyNameSingle = "Baan";
+
+    /**
+     * Create a new Job
+     * @param $data array Data to be used to create the object
+     * @return bool Whether or not the query was successful
+     */
+    public function createObject($data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "INSERT INTO {$this->tableName} " .
+            "(JobTitle, MinSalary, MaxSalary) VALUES " .
+            "(?, ?, ?)");
+
+        return $query->execute([
+            $data['JobTitle'],
+            $data['MinSalary'],
+            $data['MaxSalary']]);
+    }
 }
