@@ -56,4 +56,9 @@ class MvcBaseController {
         $model = new $model($this->MvcInstance);
         return $model;
     }
+
+    public function redirectToUrl($url) {
+        header("Location: {$this->MvcInstance->appBaseUrl}$url");
+        exit;
+    }
 }
