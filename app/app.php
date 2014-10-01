@@ -67,9 +67,9 @@ class app extends MvcApplication {
         '{^$}' => ['HomepageController', 'renderHomepage'],
 
         // Objects
-        '{^(?<model>departments|employees|jobs|locations)/list$}' => ['ObjectController', 'listObjects'],
-        '{^(?<model>departments|employees|jobs|locations)/new$}' => ['ObjectController', 'newObject'],
-        '{^(?<model>departments|employees|jobs|locations)/(?<id>\d+)/edit$}' => ['ObjectController', 'editObject'],
-        '{^(?<model>departments|employees|jobs|locations)/(?<id>\d+)/remove$}' => ['ObjectController', 'removeObject'],
+        '{^(?<model>departments|employees|jobs|locations)/list/?$}' => ['ObjectController', 'listObjects'],
+        '{^(?<model>departments|employees|jobs|locations)/new/?$}' => ['ObjectController', 'newObject'],
+        '{^(?<model>departments|employees|jobs|locations)/(?<id>\d+)/edit/?$}' => ['ObjectController', 'editObject'],
+        '{^(?<model>departments|employees|jobs|locations)/(?<id>\d+)/remove/?$}' => ['ObjectController', 'removeObject'],
     ];
 }
