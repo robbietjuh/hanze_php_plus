@@ -92,7 +92,7 @@ class MvcApplication {
      * Print an error message to the screen if @see $debug is enabled,
      * otherwise print a '404 not found' message and exit.
      *
-     * @param $title The title to be shown in the error message
+     * @param string $title The title to be shown in the error message
      * @param array $details Detailed information to be displayed
      */
     private function dieWithDebugMessageOr404($title, $details=array()) {
