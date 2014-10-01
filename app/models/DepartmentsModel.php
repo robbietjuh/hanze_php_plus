@@ -59,4 +59,23 @@ class DepartmentsModel extends MvcBaseModel {
             $data['ManagerID'],
             $data['LocationID']]);
     }
+
+    /**
+     * Update an existing Department
+     * @param $pk int Primary key value of the object to be updated
+     * @param $data array Data to be used to update the object
+     * @return bool Whether or not the query was successful
+     */
+    public function updateObject($pk, $data) {
+        $query = $this->MvcInstance->db_conn->prepare(
+            "UPDATE {$this->tableName} " .
+            "SET DepartmentName = ?, ManagerID = ?, LocationID = ? " .
+            "WHERE {$this->tablePrimaryKeyField} = ?");
+
+        return $query->execute([
+            $data['DepartmentName'],
+            $data['ManagerID'],
+            $data['LocationID'],
+            $pk]);
+    }
 }
