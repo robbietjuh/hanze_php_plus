@@ -46,7 +46,7 @@ class MvcBaseController {
 
     public function loadModel($model) {
         // Check wether the model exists
-        if(!file_exists("app/views/model.php"))
+        if(!file_exists("app/models/$model.php"))
             $this->MvcInstance->dieWithDebugMessageOr404(
                 "Could not load the model specified: file not found",
                 ['model' => $model]);
