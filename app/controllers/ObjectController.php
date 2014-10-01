@@ -62,6 +62,13 @@ class ObjectController extends MvcBaseController {
         $this->data['editUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/%d/edit";
         $this->data['removeUrl'] = "{$this->MvcInstance->appBaseUrl}/{$args['model']}/%d/remove";
 
+        // If the model matches Employees, we should change the picture column
+        // to an actual image (HTML).
+        $imgHtml = "<img src='{$this->MvcInstance->appBaseUrl}/pictures/%s' style='height: 40px;' alt='Pasfoto' />";
+        if($args['model'] == 'employees')
+            for($obj_index = 0; $obj_index < count($this->data['tableObjects']); $obj_index++)
+                $this->data['tableObjects'][$obj_index]['Picture'] = sprintf($imgHtml, $this->data['tableObjects'][$obj_index]['Picture']);
+
         // Render the views
         $this->renderBaseTemplateWithView("object_list");
     }
